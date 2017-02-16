@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<script src="calculator.js"></script>
+	</head>
+
+	<body>
+		<h1>Calculator</h1>
+
+		<input type="button" value="Clear" id="clearButton" onclick="clearStatus()"></input>
+		<br/>
+		<input type="button" value="1" id="button1" onclick="append(1)"/>
+		<input type="button" value="2" id="button2" onclick="append(2)"/>
+		<input type="button" value="3" id="button3" onclick="append(3)"/>
+		<br/>
+		<input type="button" value="4" id="button4" onclick="append(4)"/>
+		<input type="button" value="5" id="button5" onclick="append(5)"/>
+		<input type="button" value="6" id="button6" onclick="append(6)"/>
+		<br/>
+		<input type="button" value="7" id="button7" onclick="append(7)"/>
+		<input type="button" value="8" id="button8" onclick="append(8)"/>
+		<input type="button" value="9" id="button9" onclick="append(9)"/>
+		<br/>
+		<input type="button" value="0" id="button0" onclick="append(0)"/>
+		<br/>
+		<input type="button" value="+" id="addButton" onclick="add()"/>
+		<input type="button" value="-" id="subButton" onclick="sub()"/>
+		<input type="button" value="*" id="mulButton" onclick="mul()"/>
+		<input type="button" value="/" id="divButton" onclick="div()"/>
+
+		<br/>
+		<br/>
+		<input type="button" value="=" id="calculateButton" onclick="calculate()"/>
+
+		<br/>
+		<input id="status" type="text"></input>
+	</body>
+</html>
