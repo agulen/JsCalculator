@@ -22,16 +22,16 @@
 		<br/>
 		<input type="button" value="0" id="button0" onclick="append(0)"/>
 		<br/>
-		<input type="button" value="+" id="addButton" onclick="append('+')"/>
-		<input type="button" value="-" id="subButton" onclick="append('-')"/>
-		<input type="button" value="*" id="mulButton" onclick="append('*')"/>
-		<input type="button" value="/" id="divButton" onclick="append('/')"/>
+		<input type="button" value="+" id="addButton" onclick="setOperation('+')"/>
+		<input type="button" value="-" id="subButton" onclick="setOperation('-')"/>
+		<input type="button" value="*" id="mulButton" onclick="setOperation('*')"/>
+		<input type="button" value="/" id="divButton" onclick="setOperation('/')"/>
 
 		<br/>
 		<br/>
-		<input type="button" value="=" id="calculateButton" onclick="solve()"/>
+		<input type="button" value="=" id="equalButton" onclick="calculate()"/>
 
 		<br/>
-		<input id="status" type="text"></input>
+		<input id="status" type="text" value="0"></input>
 	</body>
 </html>

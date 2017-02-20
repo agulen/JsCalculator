@@ -1,88 +1,104 @@
+var operation = null; 
+var firstNumber = null; 
+var secondNumber = null;
+var creatingNumber = null; 
+
+// Clears the status window by replacing the current number with 0.
+// Also clears any cached operations 
 function clearStatus() {
-	var status = document.getElementById('status');
-	status.value = "";
+	var status = document.getElementById("status");
+	status.value = "0";
+	operation = null;
+	firstNumber = null;
+	secondNumber = null; 
 }	
 
-function append(num) {
-	var status = document.getElementById('status');
-	status.value += num;
+// Appends num to the status window if a number is currently entered
+// Replaces the number in the status window if no number is entered
+function append(digit) {
+	var status = document.getElementById("status");
+	var currentNum = status.value;
+
+	if (creatingNumber) {
+		status.value = currentNum + digit.toString();
+	}
+	if (currentNum == "0" || !creatingNumber) {
+		status.value = digit.toString();
+	}
+
+	creatingNumber = true; 
+	printLog();
 }
 
-function solve(num)
-{
-	var status = document.getElementById('status');
-	var total = calculate();
-	status.value = total; 
-}
+// Sets the arithmetic operation 
+function setOperation(newOperation) {
+	var status = document.getElementById("status");
+	creatingNumber = false; 
 
-function add(numA, numB) {
-	return numA + numB;
-}
+	if (firstNumber == null) {
+		firstNumber = status.value; 
+	}
 
-function sub(numA, numB) {
-	return numA - numB;
-}
+	if (firstNumber != null && secondNumber != null) {
+		firstNumber = solve();
+		secondNumber = null;  
+	}
 
-function mul(numA, numB) {
-	return numA * numB;
-}
+	if (operation != null) {
+		secondNumber = status.value;
+		status.value = solve(); 
+	}
 
-function div(numA, numB) {
-	return numA / numB; 
+	firstNumber = status.value; 
+	operation = newOperation;
+
+	printLog();
 }
 
 function calculate() {
-	var equation = document.getElementById('status').value;
-	var result = 0;  
-	var currentNumber; 
-	var operator = null; 
-	
-	for (var i = 0; i < equation.length; i++) {
-		var equationPart = parseInt(equation[i]);
-		var tensPower = 0;
-
-		if (isNaN(equationPart))
-		{
-			if (operator != null)
-			{
-				//We saw an operator previously and have a number to calculate
-				result = executeMath(result, currentNumber, operator);
-				operator = null; 		
-				tensPower = 0;
-			}
-			else
-			{
-				//We have an operator, get second number
-				operator = equation[i];
-				result = currentNumber;
-				currentNumber = 0;	
-			}
-		}
-		else
-		{
-			//We see a digit, build a number
-			currentNumber = equationPart * Math.pow(10, tensPower);
-			tensPower++;
-		}
-	}
-
-	result = executeMath(result, currentNumber, operator);
-
-	return result; 
+	var status = document.getElementById("status");
+	status.value = solve();
+	firstNumber = status.value; 
+	secondNumber = null;
+	operation = null; 
 }
 
-function executeMath(result, currentNumber, operator) {
-	switch (operator)
+// Solves the current equation based on entered inputs
+function solve()
+{
+	if ((firstNumber == null && secondNumber == null) || operation == null)
 	{
-		case "+":
-			return add(result, currentNumber);
-		case "-":
-			return sub(result, currentNumber);
-		case "*":
-			return mul(result, currentNumber);
-		case "/":
-			return div(result, currentNumber);
-		default:
-			alert("Error! + " + operator + " is an illegal character!")
+		return 0;
 	}
+
+	var status = document.getElementById("status");
+	var secondNumber = status.value; 
+	var total = 0;
+
+	var operand1 = parseInt(firstNumber);
+	var operand2 = parseInt(secondNumber);
+
+	switch (operation) {
+		case "+":
+			total = operand1 + operand2;
+			break;
+		case "-":
+			total = operand1 - operand2;
+			break;
+		case "*":
+			total = operand1 * operand2;
+			break;
+		case "/":
+			total = operand1 / operand2;
+			break;
+	} 
+
+	return total;
+}
+
+function printLog()
+{
+	console.log("first num: " + firstNumber);
+	console.log("second num: " + secondNumber);
+	console.log("operation: " + operation);
 }
