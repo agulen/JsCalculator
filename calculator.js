@@ -1,104 +1,85 @@
 var operation = null; 
-var firstNumber = null; 
-var secondNumber = null;
-var creatingNumber = null; 
+var cachedTotal = null; 
+var isNewNumber = true; 
 
-// Clears the status window by replacing the current number with 0.
-// Also clears any cached operations 
+// Resets the status window by replacing the current number with 0.
+// Also clears the cached total and operation
 function clearStatus() {
 	var status = document.getElementById("status");
 	status.value = "0";
 	operation = null;
-	firstNumber = null;
-	secondNumber = null; 
+	cachedTotal = null;
+	isNewNumber = true; 
 }	
 
-// Appends num to the status window if a number is currently entered
+// Appends digit to the status window if a number is currently entered.
 // Replaces the number in the status window if no number is entered
 function append(digit) {
 	var status = document.getElementById("status");
-	var currentNum = status.value;
-
-	if (creatingNumber) {
-		status.value = currentNum + digit.toString();
-	}
-	if (currentNum == "0" || !creatingNumber) {
+	
+	if (isNewNumber) {
 		status.value = digit.toString();
 	}
+	if (!isNewNumber || status.value == "0" ) {
+		status.value += digit.toString();
+	}
 
-	creatingNumber = true; 
-	printLog();
+	isNewNumber = false; 
 }
 
 // Sets the arithmetic operation 
 function setOperation(newOperation) {
+	//An operation has been entered - next digit keyed is new number
+	isNewNumber = true; 
+
+	//Cache the number entered before the operation char
 	var status = document.getElementById("status");
-	creatingNumber = false; 
-
-	if (firstNumber == null) {
-		firstNumber = status.value; 
+	if (cachedTotal == null) {
+		cachedTotal = status.value; 
 	}
-
-	if (firstNumber != null && secondNumber != null) {
-		firstNumber = solve();
-		secondNumber = null;  
+	else {
+		cachedTotal = solve(cachedTotal, status.value);
 	}
 
 	if (operation != null) {
-		secondNumber = status.value;
-		status.value = solve(); 
+		status.value = solve(cachedTotal, status.value); 
 	}
 
-	firstNumber = status.value; 
+	cachedTotal = status.value; 
 	operation = newOperation;
-
-	printLog();
 }
 
 function calculate() {
 	var status = document.getElementById("status");
-	status.value = solve();
-	firstNumber = status.value; 
+	status.value = solve(cachedTotal, status.value);
+	cachedTotal = status.value; 
 	secondNumber = null;
 	operation = null; 
 }
 
 // Solves the current equation based on entered inputs
-function solve()
+function solve(num1, num2)
 {
-	if ((firstNumber == null && secondNumber == null) || operation == null)
+	if (num1 == null || operation == null)
 	{
 		return 0;
 	}
-
-	var status = document.getElementById("status");
-	var secondNumber = status.value; 
-	var total = 0;
-
-	var operand1 = parseInt(firstNumber);
-	var operand2 = parseInt(secondNumber);
+	if (num2 == null)
+	{
+		return num1; 
+	}
+ 
+	var operand1 = parseInt(num1);
+	var operand2 = parseInt(num2);
 
 	switch (operation) {
 		case "+":
-			total = operand1 + operand2;
-			break;
+			return operand1 + operand2;
 		case "-":
-			total = operand1 - operand2;
-			break;
+			return operand1 - operand2;
 		case "*":
-			total = operand1 * operand2;
-			break;
+			return operand1 * operand2;
 		case "/":
-			total = operand1 / operand2;
-			break;
-	} 
-
-	return total;
-}
-
-function printLog()
-{
-	console.log("first num: " + firstNumber);
-	console.log("second num: " + secondNumber);
-	console.log("operation: " + operation);
+			return operand1 / operand2;
+	}
 }
