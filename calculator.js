@@ -22,6 +22,10 @@ function append(digit) {
 		status.value = digit.toString();
 	}
 	else {
+		//Don't allow multiple deicmal points to be entered
+		if (digit == "." && status.value.includes(".")) {
+			return;
+		}
 		status.value += digit.toString();
 	}
 
