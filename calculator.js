@@ -1,5 +1,5 @@
 var operation = null; 
-var cachedTotal = null; 
+var cachedTotal = 0; 
 var isNewNumber = true; 
 
 // Resets the status window by replacing the current number with 0.
@@ -7,11 +7,12 @@ var isNewNumber = true;
 function clearStatus() {
 	var status = document.getElementById("status");
 	status.value = "0";
-	operation = null;
-	cachedTotal = null;
-	isNewNumber = true; 
+	cachedTotal = 0;
+	isNewNumber = true;
+	operation = null; 
 }	
 
+// OnClick listener for the number buttons.
 // Appends digit to the status window if a number is currently entered.
 // Replaces the number in the status window if no number is entered
 function append(digit) {
@@ -20,7 +21,7 @@ function append(digit) {
 	if (isNewNumber) {
 		status.value = digit.toString();
 	}
-	if (!isNewNumber || status.value == "0" ) {
+	else {
 		status.value += digit.toString();
 	}
 
@@ -29,12 +30,16 @@ function append(digit) {
 
 // Sets the arithmetic operation 
 function setOperation(newOperation) {
+	//If an operation has been entered, but a number hasn't yet, don't take any action
+	if (isNewNumber) {
+		return;
+	}
+
 	//An operation has been entered - next digit keyed is new number
 	isNewNumber = true; 
 
-	//Cache the number entered before the operation char
 	var status = document.getElementById("status");
-	if (cachedTotal == null) {
+	if (cachedTotal == 0) {
 		cachedTotal = status.value; 
 	}
 	else {
@@ -42,35 +47,32 @@ function setOperation(newOperation) {
 	}
 
 	if (operation != null) {
-		status.value = solve(cachedTotal, status.value); 
+		status.value = cachedTotal;
 	}
 
 	cachedTotal = status.value; 
 	operation = newOperation;
 }
 
+// OnClick listener for the '=' button
+// Calculates the total based on cachedTotal and currently entered number
 function calculate() {
 	var status = document.getElementById("status");
 	status.value = solve(cachedTotal, status.value);
-	cachedTotal = status.value; 
-	secondNumber = null;
+	cachedTotal = status.value;
 	operation = null; 
 }
 
 // Solves the current equation based on entered inputs
-function solve(num1, num2)
+function solve(cachedTotal, currentNumber)
 {
-	if (num1 == null || operation == null)
+	if (currentNumber == null || operation == null)
 	{
-		return 0;
-	}
-	if (num2 == null)
-	{
-		return num1; 
+		return cachedTotal; 
 	}
  
-	var operand1 = parseInt(num1);
-	var operand2 = parseInt(num2);
+	var operand1 = parseFloat(cachedTotal);
+	var operand2 = parseFloat(currentNumber);
 
 	switch (operation) {
 		case "+":
