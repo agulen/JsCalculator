@@ -5,33 +5,42 @@
 
 	<body>
 		<h1>Calculator</h1>
-
-		<input type="button" value="Clear" id="clearButton" onclick="clearStatus()"></input>
-		<br/>
-		<input type="button" value="1" id="button1" onclick="append(1)"/>
-		<input type="button" value="2" id="button2" onclick="append(2)"/>
-		<input type="button" value="3" id="button3" onclick="append(3)"/>
-		<br/>
-		<input type="button" value="4" id="button4" onclick="append(4)"/>
-		<input type="button" value="5" id="button5" onclick="append(5)"/>
-		<input type="button" value="6" id="button6" onclick="append(6)"/>
-		<br/>
-		<input type="button" value="7" id="button7" onclick="append(7)"/>
-		<input type="button" value="8" id="button8" onclick="append(8)"/>
-		<input type="button" value="9" id="button9" onclick="append(9)"/>
-		<br/>
-		<input type="button" value="0" id="button0" onclick="append(0)"/>
-		<br/>
-		<input type="button" value="+" id="addButton" onclick="setOperation('+')"/>
-		<input type="button" value="-" id="subButton" onclick="setOperation('-')"/>
-		<input type="button" value="*" id="mulButton" onclick="setOperation('*')"/>
-		<input type="button" value="/" id="divButton" onclick="setOperation('/')"/>
-
-		<br/>
-		<br/>
-		<input type="button" value="=" id="equalButton" onclick="calculate()"/>
-
-		<br/>
-		<input id="status" type="text" value="0"></input>
+		<div>
+			<table>
+				<tbody>
+					<tr>
+						<td><input type="button" value="1" id="button1" onclick="append(1)"/></td>
+						<td><input type="button" value="2" id="button2" onclick="append(2)"/></td>
+						<td><input type="button" value="3" id="button3" onclick="append(3)"/></td>
+						<td><input type="button" value="+" id="addButton" onclick="setOperation('+')"/></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="4" id="button4" onclick="append(4)"/></td>
+						<td><input type="button" value="5" id="button5" onclick="append(5)"/></td>
+						<td><input type="button" value="6" id="button6" onclick="append(6)"/></td>
+						<td><input type="button" value="-" id="subButton" onclick="setOperation('-')"/></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="7" id="button7" onclick="append(7)"/></td>
+						<td><input type="button" value="8" id="button8" onclick="append(8)"/></td>
+						<td><input type="button" value="9" id="button9" onclick="append(9)"/></td>
+						<td><input type="button" value="*" id="mulButton" onclick="setOperation('*')"/></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="0" id="button0" onclick="append(0)"/></td>
+						<td></td>
+						<td></td>
+						<td><input type="button" value="/" id="divButton" onclick="setOperation('/')" /></td>
+					</tr>
+					<tr>
+						<td><input type="button" value="=" id="equalButton" onclick="calculate()" /></td>
+					</tr>
+				</tbody>
+			</table>
+					
+			<input type="button" value="Clear" id="clearButton" onclick="clearStatus()"/>
+			<br/>
+			<input id="status" type="text" value="0"/>
+		</div>
 	</body>
 </html>
