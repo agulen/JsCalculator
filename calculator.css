@@ -1,0 +1,43 @@
+body {
+	background: grey;
+}
+
+button {
+	width: 100px;
+	height: 100px;
+}
+
+#content {
+	display: block;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#numPad {
+	display: block;
+	width: 58%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#status {
+	width: 100%;
+	height: 50px;
+	font-size: 40px;
+}
+
+#clearButton {
+	float: right;
+	width: 200px;
+}
+
+.digitInputButton {
+	background: grey;
+	color: red;
+}
+
+.operationButton {
+	background: black;
+	color: white;
+}

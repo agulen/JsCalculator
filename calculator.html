@@ -1,46 +1,44 @@
 <html>
 	<head>
 		<script src="calculator.js"></script>
+		<title>Calculator</title>
+		<link rel="stylesheet" href="calculator.css">
 	</head>
 
 	<body>
-		<h1>Calculator</h1>
-		<div>
-			<table>
-				<tbody>
-					<tr>
-						<td><input type="button" value="7" id="button7" onclick="append(7)"/></td>
-						<td><input type="button" value="8" id="button8" onclick="append(8)"/></td>
-						<td><input type="button" value="9" id="button9" onclick="append(9)"/></td>
-						<td><input type="button" value="+" id="addButton" onclick="setOperation('+')"/></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="4" id="button4" onclick="append(4)"/></td>
-						<td><input type="button" value="5" id="button5" onclick="append(5)"/></td>
-						<td><input type="button" value="6" id="button6" onclick="append(6)"/></td>
-						<td><input type="button" value="-" id="subButton" onclick="setOperation('-')"/></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="1" id="button1" onclick="append(1)"/></td>
-						<td><input type="button" value="2" id="button2" onclick="append(2)"/></td>
-						<td><input type="button" value="3" id="button3" onclick="append(3)"/></td>
-						<td><input type="button" value="*" id="mulButton" onclick="setOperation('*')"/></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="0" id="button0" onclick="append(0)"/></td>
-						<td></td>
-						<td><input type="button" value="." id="buttonDecimal" onclick="append('.')"/></td>
-						<td><input type="button" value="/" id="divButton" onclick="setOperation('/')" /></td>
-					</tr>
-					<tr>
-						<td><input type="button" value="=" id="equalButton" onclick="calculate()" /></td>
-					</tr>
-				</tbody>
-			</table>
-					
-			<input type="button" value="Clear" id="clearButton" onclick="clearStatus()"/>
-			<br/>
-			<input id="status" type="text" value="0"/>
+		<div id="content">
+			<div>
+				<input type="text" id="status" value="0"/>
+			</div>
+			<div id="numPad">
+				<div class="buttonRow">
+					<button class="digitInputButton" onclick="append(7)">7</button>
+					<button class="digitInputButton" onclick="append(8)">8</button>
+					<button class="digitInputButton" onclick="append(9)">9</button>
+					<button class="operationButton" onclick="setOperation('+')">+</button>
+				</div>
+				<div class="buttonRow">
+					<button class="digitInputButton" onclick="append(4)">4</button>
+					<button class="digitInputButton" onclick="append(5)">5</button>
+					<button class="digitInputButton" onclick="append(6)">6</button>
+					<button class="operationButton" onclick="setOperation('-')">-</button>
+				</div>
+				<div class="buttonRow">
+					<button class="digitInputButton" onclick="append(1)">1</button>
+					<button class="digitInputButton" onclick="append(2)">2</button>
+					<button class="digitInputButton" onclick="append(3)">3</button>
+					<button class="operationButton" onclick="setOperation('*')">*</button>
+				</div>
+				<div class="buttonRow">
+					<button class="digitInputButton" onclick="append(0)">0</button>
+					<button class="digitInputButton" onclick="append('.')">.</button>
+					<button class="digitInputButton" id="equalsButton"  onclick="calculate()">=</button>
+					<button class="operationButton" onclick="setOperation('/')" >/</button>
+				</div>
+				<div>		
+					<button value="Clear" id="clearButton" onclick="clearStatus()">Clear</button>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
