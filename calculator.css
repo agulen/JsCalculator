@@ -1,10 +1,24 @@
 body {
-	background: grey;
+	background: #333333;
 }
 
 button {
-	width: 100px;
-	height: 100px;
+	width: 75px;
+	height: 75px;
+	border-color: #ededed;
+	border-width: 1px;
+	margin: 0px -2px 0px -2px;
+	font-size: 30px;
+}
+
+button:focus {
+	outline: none;
+}
+
+#mainSection {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #content {
@@ -16,28 +30,33 @@ button {
 
 #numPad {
 	display: block;
-	width: 58%;
+	width: 296px;
 	margin-left: auto;
 	margin-right: auto;
 }
 
 #status {
-	width: 100%;
+	display: block;
+	width: 300px;
 	height: 50px;
 	font-size: 40px;
+	margin: 0px auto 0px auto;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align: right;
 }
 
-#clearButton {
+#equalsButton {
+	width: 150px;
 	float: right;
-	width: 200px;
 }
 
 .digitInputButton {
-	background: grey;
-	color: red;
+	background: black;
+	color: white;
 }
 
 .operationButton {
-	background: black;
-	color: white;
+	background: orange;
+	color: black;
 }

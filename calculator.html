@@ -7,36 +7,38 @@
 
 	<body>
 		<div id="content">
-			<div>
-				<input type="text" id="status" value="0"/>
+			<div id="header">
+				<input readonly type="text" id="status" value="0" />
 			</div>
-			<div id="numPad">
-				<div class="buttonRow">
-					<button class="digitInputButton" onclick="append(7)">7</button>
-					<button class="digitInputButton" onclick="append(8)">8</button>
-					<button class="digitInputButton" onclick="append(9)">9</button>
-					<button class="operationButton" onclick="setOperation('+')">+</button>
-				</div>
-				<div class="buttonRow">
-					<button class="digitInputButton" onclick="append(4)">4</button>
-					<button class="digitInputButton" onclick="append(5)">5</button>
-					<button class="digitInputButton" onclick="append(6)">6</button>
-					<button class="operationButton" onclick="setOperation('-')">-</button>
-				</div>
-				<div class="buttonRow">
-					<button class="digitInputButton" onclick="append(1)">1</button>
-					<button class="digitInputButton" onclick="append(2)">2</button>
-					<button class="digitInputButton" onclick="append(3)">3</button>
-					<button class="operationButton" onclick="setOperation('*')">*</button>
-				</div>
-				<div class="buttonRow">
-					<button class="digitInputButton" onclick="append(0)">0</button>
-					<button class="digitInputButton" onclick="append('.')">.</button>
-					<button class="digitInputButton" id="equalsButton"  onclick="calculate()">=</button>
-					<button class="operationButton" onclick="setOperation('/')" >/</button>
-				</div>
-				<div>		
-					<button value="Clear" id="clearButton" onclick="clearStatus()">Clear</button>
+			<div id="mainSection">
+				<div id="numPad">
+					<div class="buttonRow">
+						<button class="digitInputButton" onclick="append(7)">7</button>
+						<button class="digitInputButton" onclick="append(8)">8</button>
+						<button class="digitInputButton" onclick="append(9)">9</button>
+						<button class="operationButton" onclick="setOperation('/')" >÷</button>
+					</div>
+					<div class="buttonRow">
+						<button class="digitInputButton" onclick="append(4)">4</button>
+						<button class="digitInputButton" onclick="append(5)">5</button>
+						<button class="digitInputButton" onclick="append(6)">6</button>
+						<button class="operationButton" onclick="setOperation('*')">×</button>
+					</div>
+					<div class="buttonRow">
+						<button class="digitInputButton" onclick="append(1)">1</button>
+						<button class="digitInputButton" onclick="append(2)">2</button>
+						<button class="digitInputButton" onclick="append(3)">3</button>
+						<button class="operationButton" onclick="setOperation('-')">-</button>
+					</div>
+					<div class="buttonRow">
+						<button class="digitInputButton" onclick="append(0)">0</button>
+						<button class="digitInputButton" onclick="append('.')">.</button>
+						<button id="clearButton" onclick="clearStatus()">C</button>				
+						<button class="operationButton" onclick="setOperation('+')">+</button>
+					</div>
+					<div class="buttonRow">
+						<button class="operationButton" id="equalsButton"  onclick="calculate()">=</button>
+					</div>
 				</div>
 			</div>
 		</div>
