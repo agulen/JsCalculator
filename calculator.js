@@ -89,3 +89,57 @@ function solve(cachedTotal, currentNumber)
 			return operand1 / operand2;
 	}
 }
+
+// Handles keyboard input for character input
+document.onkeypress = function(event) {
+    var charCode = event.keyCode || event.which;
+
+    if (charCode == 8 || charCode == 46)
+    {
+    	alert('delet!');
+    }
+
+    var charStr = String.fromCharCode(charCode);
+    
+    switch (charStr)
+    {
+    	case '1':
+    	case '2':
+    	case '3':
+    	case '4':
+    	case '5':
+    	case '6':
+    	case '7':
+    	case '8':
+    	case '9':
+    	case '0':
+    	case '.':
+    		append(charStr);
+    		break;
+    	case '+':
+    	case '-':
+    	case '*':
+    	case '/':
+    		setOperation(charStr);
+    		break;
+    	case '=':
+    	case '\r':
+    		calculate();
+    	default:
+    		break;
+    }
+};
+
+//Handled keyboard input for backspace/delete key
+document.onkeyup = function(event) {
+	var key = event.keyCode || event.charCode;
+
+	if (key == 8 || key == 46)
+	{
+		clearStatus();
+	}
+};
+
+
+
+
