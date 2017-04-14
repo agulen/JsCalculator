@@ -1,5 +1,10 @@
+//Holds the current calculator operation (add, subtract, multiply, divide, equals)
 var operation = null; 
+
+//Maintains cached total for when user chains operations together
 var cachedTotal = 0; 
+
+//Boolean set to true for when the number entered should replace the current number in the calculator
 var isNewNumber = true; 
 
 // Resets the status window by replacing the current number with 0.
@@ -15,18 +20,18 @@ function clearStatus() {
 // OnClick listener for the number buttons.
 // Appends digit to the status window if a number is currently entered.
 // Replaces the number in the status window if no number is entered
-function append(digit) {
+function append(char) {
 	var status = document.getElementById("status");
 	
 	if (isNewNumber) {
-		status.value = digit.toString();
+		status.value = char.toString();
 	}
 	else {
 		//Don't allow multiple deicmal points to be entered
-		if (digit == "." && status.value.includes(".")) {
+		if (char == "." && status.value.includes(".")) {
 			return;
 		}
-		status.value += digit.toString();
+		status.value += char.toString();
 	}
 
 	isNewNumber = false; 
@@ -34,10 +39,6 @@ function append(digit) {
 
 // Sets the arithmetic operation 
 function setOperation(newOperation) {
-	//If an operation has been entered, but a number hasn't yet, don't take any action
-	if (isNewNumber) {
-		return;
-	}
 
 	//An operation has been entered - next digit keyed is new number
 	isNewNumber = true; 
@@ -65,6 +66,7 @@ function calculate() {
 	status.value = solve(cachedTotal, status.value);
 	cachedTotal = status.value;
 	operation = null; 
+	isNewNumber = true; 
 }
 
 // Solves the current equation based on entered inputs
@@ -94,13 +96,13 @@ function solve(cachedTotal, currentNumber)
 document.onkeypress = function(event) {
     var charCode = event.keyCode || event.which;
 
-    if (charCode == 8 || charCode == 46)
+    if (charCode == 8)
     {
-    	alert('delet!');
+    	alert(charCode);
     }
 
     var charStr = String.fromCharCode(charCode);
-    
+
     switch (charStr)
     {
     	case '1':
@@ -130,7 +132,7 @@ document.onkeypress = function(event) {
     }
 };
 
-//Handled keyboard input for backspace/delete key
+//Handle keyboard input for backspace/delete key
 document.onkeyup = function(event) {
 	var key = event.keyCode || event.charCode;
 
