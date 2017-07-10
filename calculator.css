@@ -15,6 +15,14 @@ button:focus {
 	outline: none;
 }
 
+button:active {
+	border-width: 3px;
+}
+
+.pressedButton {
+	border-width: 3px;
+}
+
 #mainSection {
 	display: block;
 	margin-left: auto;
@@ -46,7 +54,7 @@ button:focus {
 	text-align: right;
 }
 
-#equalsButton {
+#buttonEquals {
 	width: 150px;
 	float: right;
 }

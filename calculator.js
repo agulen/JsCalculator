@@ -7,6 +7,38 @@ var cachedTotal = 0;
 //Boolean set to true for when the number entered should replace the current number in the calculator
 var isNewNumber = true; 
 
+//HTML element ID for button that was pressed
+var buttonPressedId = null;
+
+//Character to print to screen when button is pressed
+var buttonCharacter = null;
+
+//Did user press a keyboard character that we care about?
+var validKeyPressed = false;
+
+//Mapping for button press event char code to button ID
+var charCodeToButtonId = 
+{
+	48 : 'Zero',
+	49 : 'One',
+	50 : 'Two',
+	51 : 'Three',
+	52 : 'Four',
+	53 : 'Five',
+	54 : 'Six',
+	55 : 'Seven',
+	56 : 'Eight',
+	57 : 'Nine',
+	46 : 'Decimal',
+	43 : 'Plus',
+	45 : 'Minus',
+	42 : 'Times',
+	47 : 'Divide',
+	99 : 'Clear', 
+	61 : 'Equals', //Equals key
+	13 : 'Equals', //Enter key
+}
+
 // Resets the status window by replacing the current number with 0.
 // Also clears the cached total and operation
 function clearStatus() {
@@ -39,11 +71,13 @@ function append(char) {
 
 // Sets the arithmetic operation 
 function setOperation(newOperation) {
-
+	var status = document.getElementById("status");
+	
 	//An operation has been entered - next digit keyed is new number
 	isNewNumber = true; 
 
-	var status = document.getElementById("status");
+	console.log(cachedTotal);
+
 	if (cachedTotal == 0) {
 		cachedTotal = status.value; 
 	}
@@ -92,56 +126,74 @@ function solve(cachedTotal, currentNumber)
 	}
 }
 
-// Handles keyboard input for character input
+// Handle keyboard input for character input
 document.onkeypress = function(event) {
     var charCode = event.keyCode || event.which;
+    buttonCharacter = String.fromCharCode(charCode);
 
-    if (charCode == 8)
-    {
-    	alert(charCode);
-    }
-
-    var charStr = String.fromCharCode(charCode);
-
-    switch (charStr)
-    {
-    	case '1':
-    	case '2':
-    	case '3':
-    	case '4':
-    	case '5':
-    	case '6':
-    	case '7':
-    	case '8':
-    	case '9':
-    	case '0':
-    	case '.':
-    		append(charStr);
-    		break;
-    	case '+':
-    	case '-':
-    	case '*':
-    	case '/':
-    		setOperation(charStr);
-    		break;
-    	case '=':
-    	case '\r':
-    		calculate();
-    	default:
-    		break;
-    }
+    buttonPressedId = "button".concat(charCodeToButtonId[charCode]);
+    
+	if (executeButtonAction(buttonPressedId))
+	{
+	    var button = document.getElementById(buttonPressedId);
+	    button.classList.add('pressedButton');
+	    validKeyPressed = true;
+	    console.log(buttonPressedId);
+	}
 };
-
-//Handle keyboard input for backspace/delete key
 document.onkeyup = function(event) {
-	var key = event.keyCode || event.charCode;
-
-	if (key == 8 || key == 46)
+	var charCode = event.keyCode || event.which;
+	if (charCode == 8 || charCode == 46)
 	{
 		clearStatus();
 	}
+
+	if (validKeyPressed)
+	{   
+	    var button = document.getElementById(buttonPressedId);
+		button.classList.remove('pressedButton');
+	}
 };
 
+//Executes an action depending on the button pressed
+function executeButtonAction(buttonPressedId)
+{
+	switch (buttonPressedId)
+    {
+    	case 'buttonZero':
+    	case 'buttonOne':
+    	case 'buttonTwo':
+    	case 'buttonThree':
+    	case 'buttonFour':
+    	case 'buttonFive':
+    	case 'buttonSix':
+    	case 'buttonSeven':
+    	case 'buttonEight':
+    	case 'buttonNine':
+    	case 'buttonDecimal':
+    		append(buttonCharacter);
+    		break;
+    	case 'buttonPlus':
+    		setOperation(buttonCharacter);
+    		break;
+    	case 'buttonMinus':
+    		setOperation(buttonCharacter);
+    		break;
+    	case 'buttonTimes':
+    		setOperation(buttonCharacter);
+    		break;
+    	case 'buttonDivide':
+    		setOperation(buttonCharacter);
+    		break;
+    	case 'buttonEquals':
+    		calculate();
+    		break;
+    	case 'buttonClear':
+    		clearStatus();
+    		break;
+    	default:
+    		return false;
+    }
 
-
-
+    return true;
+}
