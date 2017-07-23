@@ -1,0 +1,70 @@
+body {
+	background: #333333;
+}
+
+button {
+	width: 75px;
+	height: 75px;
+	border-color: #ededed;
+	border-width: 1px;
+	margin: 0px -2px 0px -2px;
+	font-size: 30px;
+}
+
+button:focus {
+	outline: none;
+}
+
+button:active {
+	border-width: 3px;
+}
+
+.pressedButton {
+	border-width: 3px;
+}
+
+#mainSection {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#content {
+	display: block;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#numPad {
+	display: block;
+	width: 296px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#status {
+	display: block;
+	width: 300px;
+	height: 50px;
+	font-size: 40px;
+	margin: 0px auto 0px auto;
+	padding-right: 5px;
+	padding-left: 5px;
+	text-align: right;
+}
+
+#buttonEquals {
+	width: 150px;
+	float: right;
+}
+
+.digitInputButton {
+	background: black;
+	color: white;
+}
+
+.operationButton {
+	background: #3179bd;
+	color: black;
+}
