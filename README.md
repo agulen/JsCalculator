@@ -1,5 +1,5 @@
 # JsCalculator
-### A small project for learning Javascript and HTML5.
+### A small project for learning Javascript and HTML5
 
 Simple artithmetic calculator. 
 
