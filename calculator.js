@@ -7,6 +7,10 @@ var cachedTotal = 0;
 //Boolean set to true for when the number entered should replace the current number in the calculator
 var isNewNumber = true; 
 
+//Boolean set to true when the last button pressed was an operator (+, -, *, or /)
+//Prevents calculations being made if user hits operators without digit inputs.
+var lastKeyPressedWasOperator = false;
+
 //HTML element ID for button that was pressed
 var buttonPressedId = null;
 
@@ -36,7 +40,7 @@ var charCodeToButtonId =
 	47 : 'Divide',
 	99 : 'Clear', 
 	61 : 'Equals', //Equals key
-	13 : 'Equals' //Enter key
+	13 : 'Equals'  //Enter key
 }
 
 // Resets the status window by replacing the current number with 0.
@@ -50,6 +54,7 @@ function clearStatus() {
 
 	cachedTotal = 0;
 	isNewNumber = true;
+	lastKeyPressedWasOperator = false;
 	operation = null;
 }	
 
@@ -64,13 +69,14 @@ function append(char) {
 	}
 	else {
 		//Don't allow multiple deicmal points to be entered
-		if (char == "." && status.value.includes('.')) {
+		if (char == '.' && status.value.includes('.')) {
 			return;
 		}
 		status.value += char.toString();
 	}
 
 	isNewNumber = false; 
+	lastKeyPressedWasOperator = false;
 }
 
 // Sets the arithmetic operation 
@@ -82,16 +88,20 @@ function setOperation(newOperation) {
 	if (cachedTotal == 0) {
 		cachedTotal = status.value; 
 	}
-	else {
+	else if (!lastKeyPressedWasOperator) {
+		//If user enters multiple operators in a row, don't take any action
 		cachedTotal = solve(cachedTotal, status.value);
 	}
 
 	if (operation != null) {
+		//Allow the user to chain together operators without pressing Equals button
+		//Display the updated cached total in the status
 		status.value = cachedTotal;
 	}
 
-	cachedTotal = status.value; 
+	cachedTotal = status.value;
 	operation = newOperation;
+	lastKeyPressedWasOperator = true;
 }
 
 // OnClick listener for the '=' button
@@ -107,6 +117,8 @@ function calculate() {
 // Solves the current equation based on entered inputs
 function solve(cachedTotal, currentNumber)
 {
+	lastKeyPressedWasOperator = false;
+
 	if (currentNumber == null || operation == null)
 	{
 		return cachedTotal; 
@@ -131,7 +143,6 @@ function solve(cachedTotal, currentNumber)
 document.onkeypress = function(event) {
     var charCode = event.keyCode || event.which;
     buttonCharacter = String.fromCharCode(charCode);
-    
     buttonPressedId = 'button'.concat(charCodeToButtonId[charCode]);
     
 	if (executeButtonAction(buttonPressedId)) {
