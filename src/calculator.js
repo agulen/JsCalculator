@@ -7,6 +7,10 @@ var cachedTotal = 0;
 //Boolean set to true for when the number entered should replace the current number in the calculator
 var isNewNumber = true; 
 
+//Boolean set to true when the last button pressed was an operator (+, -, *, or /)
+//Prevents calculations being made if user hits operators without digit inputs.
+var lastKeyPressedWasOperator = false;
+
 //HTML element ID for button that was pressed
 var buttonPressedId = null;
 
@@ -14,7 +18,7 @@ var buttonPressedId = null;
 var buttonCharacter = null;
 
 //Did user press a keyboard character that we care about?
-var validKeyPressed = false;
+var validKey = false;
 
 //Mapping for button press event char code to button ID
 var charCodeToButtonId = 
@@ -36,67 +40,74 @@ var charCodeToButtonId =
 	47 : 'Divide',
 	99 : 'Clear', 
 	61 : 'Equals', //Equals key
-	13 : 'Equals', //Enter key
+	13 : 'Equals'  //Enter key
 }
 
 // Resets the status window by replacing the current number with 0.
 // Also clears the cached total and operation
 function clearStatus() {
-	var status = document.getElementById("status");
+	var status = document.getElementById('status');
 	status.value = "0";
+
+	var clearButton = document.getElementById('buttonClear');
+	clearButton.blur();
+
 	cachedTotal = 0;
 	isNewNumber = true;
-	operation = null; 
+	lastKeyPressedWasOperator = false;
+	operation = null;
 }	
 
 // OnClick listener for the number buttons.
 // Appends digit to the status window if a number is currently entered.
 // Replaces the number in the status window if no number is entered
 function append(char) {
-	var status = document.getElementById("status");
+	var status = document.getElementById('status');
 	
 	if (isNewNumber) {
 		status.value = char.toString();
 	}
 	else {
 		//Don't allow multiple deicmal points to be entered
-		if (char == "." && status.value.includes(".")) {
+		if (char == '.' && status.value.includes('.')) {
 			return;
 		}
 		status.value += char.toString();
 	}
 
 	isNewNumber = false; 
+	lastKeyPressedWasOperator = false;
 }
 
 // Sets the arithmetic operation 
 function setOperation(newOperation) {
-	var status = document.getElementById("status");
-	
 	//An operation has been entered - next digit keyed is new number
 	isNewNumber = true; 
 
-	console.log(cachedTotal);
-
+	var status = document.getElementById('status');
 	if (cachedTotal == 0) {
 		cachedTotal = status.value; 
 	}
-	else {
+	else if (!lastKeyPressedWasOperator) {
+		//If user enters multiple operators in a row, don't take any action
 		cachedTotal = solve(cachedTotal, status.value);
 	}
 
 	if (operation != null) {
+		//Allow the user to chain together operators without pressing Equals button
+		//Display the updated cached total in the status
 		status.value = cachedTotal;
 	}
 
-	cachedTotal = status.value; 
+	cachedTotal = status.value;
 	operation = newOperation;
+	lastKeyPressedWasOperator = true;
 }
 
 // OnClick listener for the '=' button
 // Calculates the total based on cachedTotal and currently entered number
 function calculate() {
-	var status = document.getElementById("status");
+	var status = document.getElementById('status');
 	status.value = solve(cachedTotal, status.value);
 	cachedTotal = status.value;
 	operation = null; 
@@ -106,6 +117,8 @@ function calculate() {
 // Solves the current equation based on entered inputs
 function solve(cachedTotal, currentNumber)
 {
+	lastKeyPressedWasOperator = false;
+
 	if (currentNumber == null || operation == null)
 	{
 		return cachedTotal; 
@@ -130,26 +143,22 @@ function solve(cachedTotal, currentNumber)
 document.onkeypress = function(event) {
     var charCode = event.keyCode || event.which;
     buttonCharacter = String.fromCharCode(charCode);
-
-    buttonPressedId = "button".concat(charCodeToButtonId[charCode]);
+    buttonPressedId = 'button'.concat(charCodeToButtonId[charCode]);
     
-	if (executeButtonAction(buttonPressedId))
-	{
+	if (executeButtonAction(buttonPressedId)) {
 	    var button = document.getElementById(buttonPressedId);
 	    button.classList.add('pressedButton');
-	    validKeyPressed = true;
-	    console.log(buttonPressedId);
+	    validKey = true;
 	}
 };
 document.onkeyup = function(event) {
 	var charCode = event.keyCode || event.which;
-	if (charCode == 8 || charCode == 46)
-	{
+
+	if (charCode == 8) {
 		clearStatus();
 	}
 
-	if (validKeyPressed)
-	{   
+	if (validKey) {   
 	    var button = document.getElementById(buttonPressedId);
 		button.classList.remove('pressedButton');
 	}
@@ -158,8 +167,7 @@ document.onkeyup = function(event) {
 //Executes an action depending on the button pressed
 function executeButtonAction(buttonPressedId)
 {
-	switch (buttonPressedId)
-    {
+	switch (buttonPressedId) {
     	case 'buttonZero':
     	case 'buttonOne':
     	case 'buttonTwo':
